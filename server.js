@@ -1,3 +1,7 @@
+// var로 만든 변수 = 재선언 O, 재할당 O, 생존범위는 function
+// let로 만든 변수 = 재선언 X, 재할당 O, 생존범위는 {}
+// const로 만든 변수 = 재선언 X, 재할당 X, 생존범위는 {}
+
 const express = require('express');
 const app = express();
 // const bodyParser = require('body-parser');
@@ -40,11 +44,19 @@ app.get('/write', function(req, res){
 
 app.post('/add', function(요청, 응답){
     응답.send('전송완료');
-    console.log(요청.body.title);
-    console.log(요청.body.date);
-    // db.collection('post').insertOne( {제목:요청.body.title, 날짜: 요청.body.date}, function(){
-    //     console.log('저장완료');
-    // });    
+    // console.log(요청.body.title);
+    // console.log(요청.body.date);
+    db.collection('counter').findOne({name : '게시물갯수'}, function(에러, 결과){
+        console.log(결과.totalPost) // 결과.totalPost = 총게시물갯수
+        var 총게시물갯수 = 결과.totalPost; // MongoDB에서 관리되는 데이터의 id Auto Increment를 위해 counter라는 Document에 관리 -> 게시물갯수를 불러옴 
+        
+        db.collection('post').insertOne( {_id : 총게시물갯수 + 1, 제목 : 요청.body.title, 날짜 : 요청.body.date}, function(){
+            console.log('저장완료');
+        });
+    
+
+    }); 
+
 });
 
 app.get('/list', function(req, res){
