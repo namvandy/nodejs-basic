@@ -50,11 +50,14 @@ app.post('/add', function(요청, 응답){
         console.log(결과.totalPost) // 결과.totalPost = 총게시물갯수
         var 총게시물갯수 = 결과.totalPost; // MongoDB에서 관리되는 데이터의 id Auto Increment를 위해 counter라는 Document에 관리 -> 게시물갯수를 불러옴 
         
+        // counter라는 collection에 있는 totalPost 라는 항목도 1 증가시킴.
         db.collection('post').insertOne( {_id : 총게시물갯수 + 1, 제목 : 요청.body.title, 날짜 : 요청.body.date}, function(){
             console.log('저장완료');
+            db.collection('counter').updateOne( {name : '게시물갯수'}, { $inc : {totalPost : 1}}, function(에러, 결과){
+                if(에러){return console.log(에러)}
+            }) // operator,{어떤 데이터를 수정할지}, {수정값}
         });
     
-
     }); 
 
 });
