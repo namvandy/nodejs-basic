@@ -31,27 +31,45 @@
         </div>
       </nav>
 
-      서버에서 가져온 할 일 리스트
+    <h4 class="'ml-2 my-3">서버에서 가져온 할 일 리스트</h4>
     <!-- 반복문으로 불러오기 -->
-     <% for (var i=0 ; i< posts.length ; i++){ %>
+     <!-- <% for (var i=0 ; i< posts.length ; i++){ %>
         <h4>할 일 제목 : <%= posts[i].제목 %></h4>
         <p>할 일 마감날짜 : <%= posts[i].날짜 %></p>
     <% } %>
+     -->
+    <ul class="list-group">
+      <% for (var i = 0; i < posts.length; i++){ %>
+      <li class="list-group-item">
+        <h4> 할일 제목 : <%= posts[0].제목 %> </h4>
+        <p> 할일 마감날짜 : <%= posts[0].날짜 %> </p>
+        <button>삭제</button>
+      </li>
+      <% } %>
+    </ul>
+    <!-- DELETE 요청하는 법
+        1. method-override 라이브러리 사용
+        2. JS AJAX 사용 -> jquery
+    -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+
+  <script>
+    // 서버에 새로고침없이 /delete경로로 DELETE 요청 진행
+    // 요청이 성공하면 funtion(결과) 실행
+    $.ajax({
+      method : 'DELETE',
+      url : '/delete',
+      // data : '게시물번호'
+      data : {_id : 1}
+    }).done(function(결과){
+
+    });
+
+  </script>
 
 
-
-      <!-- 일반 불러오기 -->
-      <h4>할 일 제목 : <%= posts[0].제목 %></h4>
-      <p>할 일 마감날짜 : <%= posts[0].날짜 %></p>
-      
-      <h4>할 일 제목 : <%= posts[1].제목 %></h4>
-      <p>할 일 마감날짜 : <%= posts[1].날짜 %></p>
-
-      <h4>할 일 제목 : <%= posts[2].제목 %></h4>
-      <p>할 일 마감날짜 : <%= posts[2].날짜 %></p>
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
     
   </body>
 </html>

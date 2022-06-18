@@ -62,12 +62,17 @@ app.post('/add', function(요청, 응답){
 
 });
 
-app.get('/list', function(req, res){
+app.get('/list', function(요청, 응답){
     //DB에 저장된 post라는 collection안의 모든 데이터를 꺼내 주세요
     db.collection('post').find().toArray(function(에러, 결과){
         console.log(결과);
-        res.render('list.ejs',{ posts : 결과 });
+        응답.render('list.ejs',{ posts : 결과 });
     });    
     // ejs 파일 사용 시에는 views라는 폴더 안에 존재하게 해야함. 규칙.
     
+});
+
+app.delete('/delete', function(요청, 응답){
+    console.log(요청.body); // 요청시 함께 보낸 데이터 찾기 위해 찍은 것(게시물 번호)
+    // 요청.body에 담긴 게시물 번호에 따라 DB에서 데이터 삭제
 });
