@@ -75,4 +75,8 @@ app.get('/list', function(요청, 응답){
 app.delete('/delete', function(요청, 응답){
     console.log(요청.body); // 요청시 함께 보낸 데이터 찾기 위해 찍은 것(게시물 번호)
     // 요청.body에 담긴 게시물 번호에 따라 DB에서 데이터 삭제
+    요청.body._id = parseInt(요청.body._id);// 요청.body에서 id의 값을 문자열로 반환시킴 -> int형으로 바꾸어야 함
+    db.collection('post').deleteOne(요청.body, function(에러, 결과){
+        console.log('삭제완료');
+    });
 });

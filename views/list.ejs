@@ -41,9 +41,11 @@
     <ul class="list-group">
       <% for (var i = 0; i < posts.length; i++){ %>
       <li class="list-group-item">
-        <h4> 할일 제목 : <%= posts[0].제목 %> </h4>
-        <p> 할일 마감날짜 : <%= posts[0].날짜 %> </p>
-        <button>삭제</button>
+        <p>글번호 : <%= posts[i]._id %></p>
+        <h4> 할일 제목 : <%= posts[i].제목 %> </h4>
+        <p> 할일 마감날짜 : <%= posts[i].날짜 %> </p>
+        <button class="delete" data-id="<%= posts[i]._id %>">삭제</button>
+        <!-- data-id 속성에 _id 숨기기 -->
       </li>
       <% } %>
     </ul>
@@ -56,14 +58,21 @@
   <script>
     // 서버에 새로고침없이 /delete경로로 DELETE 요청 진행
     // 요청이 성공하면 funtion(결과) 실행
-    $.ajax({
+    // jquery를 하나 추가해서 class가 delete이면 ajax 실행 -> 누른 버튼의 번호를 담아서 데이터를 삭제해야하므로 코드 변경
+    // 1. 버튼마다 번호달기
+    $('.delete').click(function(e){
+      var 글번호 = e.target.dataset.id; // 누른 요소(e.target)의 data-id값(dataset.id)을 가져오기
+      $.ajax({
       method : 'DELETE',
       url : '/delete',
       // data : '게시물번호'
-      data : {_id : 1}
-    }).done(function(결과){
+      data : {_id : 글번호} // 지금 낸가 클릭한 버튼의 id를 여기에 집어넣기
+      }).done(function(결과){
 
-    });
+      });
+    })
+    
+    
 
   </script>
 
