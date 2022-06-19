@@ -62,13 +62,20 @@
     // 1. 버튼마다 번호달기
     $('.delete').click(function(e){
       var 글번호 = e.target.dataset.id; // 누른 요소(e.target)의 data-id값(dataset.id)을 가져오기
+      var 지금누른거 = $(this); // this : 지금 이벤ㄴ트 동작하는 곳
       $.ajax({
       method : 'DELETE',
       url : '/delete',
       // data : '게시물번호'
       data : {_id : 글번호} // 지금 낸가 클릭한 버튼의 id를 여기에 집어넣기
       }).done(function(결과){
-
+        // 페이지를 강제로 새로고침해주세요
+        // 삭제버튼을 누른 <li> 요소를 제거해주세요/안보이게 해주세요
+        console.log('성공했으여')
+        지금누른거.parent('li').fadeOut();
+      }).fail(function(xhr,textStatus,errorThrown){
+        console.log('실패했으여');
+        console.log(xhr, textStatus, errorThrown);
       });
     })
     

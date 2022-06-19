@@ -78,5 +78,17 @@ app.delete('/delete', function(요청, 응답){
     요청.body._id = parseInt(요청.body._id);// 요청.body에서 id의 값을 문자열로 반환시킴 -> int형으로 바꾸어야 함
     db.collection('post').deleteOne(요청.body, function(에러, 결과){
         console.log('삭제완료');
+        응답.status(200).send({ message : '성공했습니다'});
     });
 });
+
+// :id -> detail/??로 GET요청을 하면 아래 코드를 실행함(Parameter)
+// 요청.parmas.id -> 파라미터 중 :id라는 뜻
+app.get('/detail/:id', function(요청, 응답){
+    db.collection('post').findOne({_id : parseInt(요청.params.id)}, function(에러, 결과){
+        console.log(결과);
+        응답.render('detail.ejs', { data : 결과 });
+        
+    })
+
+})
