@@ -9,6 +9,9 @@ app.use(express.urlencoded({extended: true}));
 const MongoClient = require('mongodb').MongoClient;
 app.set('view engine', 'ejs');
 
+app.use('/public', express.static('public'));
+
+
 var db;
 MongoClient.connect('mongodb+srv://namvandy:qwer1234@cluster0.dybrzzr.mongodb.net/?retryWrites=true&w=majority',function(에러, client){
     // 연결되면 할 일
@@ -35,11 +38,12 @@ app.get('/beauty', function(req, res){
 });
 
 app.get('/', function(req,res){
-    res.sendfile(__dirname + '/index.html');
+    res.render('index.ejs');
 });
 
 app.get('/write', function(req, res){
-    res.sendfile(__dirname + '/write.html');
+    res.render('write.ejs');
+    console.log('write 페이지 접속')
 });
 
 app.post('/add', function(요청, 응답){
